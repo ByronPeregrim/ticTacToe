@@ -38,6 +38,8 @@ h1 {
     margin-bottom: 50px;
     font-size: 50px;
     align-self: center;
+    width: 305px;
+    text-align: center;
 }
 
 .board {
