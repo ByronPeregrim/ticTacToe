@@ -1,29 +1,3 @@
-var events = {
-    events: {},
-    on: function (eventName, fn) {
-      this.events[eventName] = this.events[eventName] || [];
-      this.events[eventName].push(fn);
-    },
-    off: function(eventName, fn) {
-      if (this.events[eventName]) {
-        for (var i = 0; i < this.events[eventName].length; i++) {
-          if (this.events[eventName][i] === fn) {
-            this.events[eventName].splice(i, 1);
-            break;
-          }
-        };
-      }
-    },
-    emit: function (eventName, data) {
-      if (this.events[eventName]) {
-        this.events[eventName].forEach(function(fn) {
-          fn(data);
-        });
-      }
-    }
-  };
-
-
 const Player = (name) => {
     return {name}
 };
@@ -50,40 +24,51 @@ const playerModule = {
     }
 };
 
-playerModule.init();
-/*
-const Player = {
-    people: [],
+
+const board = {
     init: function() {
         this.cacheDom();
+        this.attachEventListeners();
     },
     cacheDom: function() {
-        this.$el = $('#leftPanel');
-        this.$firstPlayerName = this.$el.find('#firstPlayerName');
-        this.$secondPlayerName = this.$el.find('#secondPlayerName');
-        this.$button = this.$el.find('button');
+        this.$allSquares = document.querySelectorAll('.square');
     },
-    editNames: function() {
-        player1 = prompt("Enter name for player 1: ", 'Bill');
-        player2 = prompt('Enter name for player 2: ', 'Ted');
-        this.$firstPlayerName.innerHTML = "Player 1: " + player1;
-        
+    attachEventListeners: function() {
+        this.$allSquares.forEach(square => {
+            square.addEventListener('click', function(e) {
+                board.addMark(e.target, 'X');
+            });
+        });
+    },
+    addMark : function(ele, symbol) {
+        ele.innerHTML = symbol;
     }
-
 };
-Player.init();
-Player.editNames();
-
-*/ 
-
-// user clicks edit names input
-// user is prompted to input player names
-// player names are stored and displayed in playerName divs
 
 
+const results = {
+    init: function() {
+        this.cacheDom();
+        this.attachEventListeners();
+    },
+    cacheDom: function() {
+        this.$resultsContainer = document.querySelector('.resultsContainer');
+        this.$button = document.querySelector('#startNewGameButton');
+    },
+    attachEventListeners: function() {
+        this.$button.addEventListener('click', results.startNewGame);
+    },
+    startNewGame: function() {
+        board.$allSquares.forEach(square => {
+            square.innerHTML = '';
+        });
+    }
+};
 
 
-
+playerModule.init();
+results.init();
+board.init();
 
 // use factory to create player objects
 
