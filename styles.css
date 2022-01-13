@@ -27,6 +27,7 @@ body {
     margin-left: 5px;
     background-color: rgba(245, 245, 245, 0.377);
     width: 200px;
+    padding-left: 5px;
 }
 
 #editNamesButton {
